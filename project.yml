@@ -25,6 +25,11 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.secondset.app
         CODE_SIGN_STYLE: Automatic
+        # Kept here, not just in Xcode's UI: the .xcodeproj is generated, so a
+        # team set through Signing & Capabilities is wiped by the next
+        # `xcodegen generate`. Override locally with your own if you are not on
+        # this team — see README.
+        DEVELOPMENT_TEAM: 3YF2M59Q33
         # visionOS apps must declare the immersive-space capability set.
         UIApplicationSceneManifest_Generation: NO
     info:

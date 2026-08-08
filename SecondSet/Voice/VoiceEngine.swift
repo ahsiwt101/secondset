@@ -22,11 +22,15 @@ final class VoiceEngine: VoiceProvider {
     private var lastCommit: TimeInterval = 0
     private(set) var isListening = false
 
-    /// Always-on ambient capture. Off by default: SPEC §12.1 makes
-    /// nurse-initiated the primary trigger, because the mic array is beamformed
-    /// toward the wearer and a masked surgeon two metres off-axis is working
-    /// against what the hardware is tuned to do.
-    var ambientMode = false
+    /// Always-on ambient capture, so a request the surgeon speaks aloud appears
+    /// on its own without the nurse doing anything — which is the whole point.
+    ///
+    /// On by default despite SPEC §12.1's caution: the mic array is beamformed
+    /// toward the wearer, so a masked surgeon two metres off-axis may not be
+    /// picked up reliably. If the hour-zero mic test shows that, this becomes
+    /// the nurse repeating the request rather than the surgeon being overheard
+    /// — the interaction is identical either way, so nothing downstream cares.
+    var ambientMode = true
 
     init() {
         (requests, continuation) = AsyncStream.makeStream()

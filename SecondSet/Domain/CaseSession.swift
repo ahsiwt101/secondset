@@ -25,6 +25,14 @@ final class CaseSession {
     /// the nurse does not need to see what the recogniser thought it heard.
     private(set) var lastHeard: String = ""
 
+    /// A request that has been heard and resolved but not yet accepted. The
+    /// wearer taps "Find instrument" to act on it. See `PendingRequest`.
+    private(set) var pending: PendingRequest?
+    private var pendingExpiry: Date?
+
+    /// True once the wearer has finished setup and started the case.
+    var flow: AppFlow = .setup(.welcome)
+
     var phase: CasePhase = .setup {
         didSet { Task { await rebuildResolver() } }
     }
@@ -181,6 +189,11 @@ final class CaseSession {
         apply(asObject)
     }
 
+    func reportError(_ message: String?) {
+        lastError = message
+        if let message { Log.session.error("\(message, privacy: .public)") }
+    }
+
     func updateHealth(_ new: PerceptionHealth) {
         var h = new
         h.boundTrayCount = trays.values.count(where: \.isBound)
@@ -193,13 +206,11 @@ final class CaseSession {
         switch request {
         case .resolved(let ref, let heard):
             lastHeard = heard
-            show(ref)
+            raise(PendingRequest(heard: heard, options: [ref], raisedAt: Date()))
 
         case .ambiguous(let refs, let heard):
             lastHeard = heard
-            guidance = .ambiguous(refs)
-            guidanceExpiry = Date().addingTimeInterval(Tunables.guidanceTimeout)
-            renderer?.showAmbiguous(refs, session: self)
+            raise(PendingRequest(heard: heard, options: Array(refs.prefix(3)), raisedAt: Date()))
 
         case .notOnField(let name, let heard):
             lastHeard = heard
@@ -221,11 +232,59 @@ final class CaseSession {
         }
     }
 
+    // MARK: - Pending requests
+
+    /// Surface a heard request for confirmation. Replaces any earlier pending
+    /// request — the most recent thing the surgeon said is the one that matters.
+    private func raise(_ request: PendingRequest) {
+        pending = request
+        // Long enough that a nurse mid-task can still act on it, short enough
+        // that a stale request does not sit there implying it is current.
+        pendingExpiry = Date().addingTimeInterval(30)
+    }
+
+    /// The wearer accepted the request. This is the only path into guidance.
+    func confirmFind(_ ref: SlotRef? = nil) {
+        guard let target = ref ?? pending?.single else { return }
+        pending = nil
+        pendingExpiry = nil
+        show(target)
+    }
+
+    func dismissPending() {
+        pending = nil
+        pendingExpiry = nil
+    }
+
     func show(_ ref: SlotRef) {
         guidanceExpiry = Date().addingTimeInterval(Tunables.guidanceTimeout)
         // The tick loop immediately promotes this to far or near by distance.
         guidance = .guidingFar(ref)
         tick()
+    }
+
+    /// Keep guidance alive while the wearer is still walking to the tray.
+    func extendGuidance() {
+        guard guidance.isGuiding else { return }
+        guidanceExpiry = Date().addingTimeInterval(Tunables.guidanceTimeout)
+    }
+
+    func stopGuiding() {
+        guidance = .idle
+        guidanceExpiry = nil
+        renderer?.clear()
+    }
+
+    /// Every item on every registered tray, for the browse-and-tap fallback.
+    /// Voice is the fast path, not the only path — a recogniser that will not
+    /// cooperate must never leave the wearer with no way to find anything.
+    var browsableItems: [(ref: SlotRef, name: String, tray: String)] {
+        boundTrays.flatMap { tray in
+            tray.manifest.slots.map { slot in
+                (SlotRef.instrument(tray.id, slot.index), slot.displayName, tray.displayName)
+            }
+        }
+        .sorted { $0.1 < $1.1 }
     }
 
     func beginListening() {
@@ -320,6 +379,11 @@ final class CaseSession {
     // MARK: - Tick: far/near crossfade (SPEC §14)
 
     func tick() {
+        if let expiry = pendingExpiry, Date() >= expiry {
+            pending = nil
+            pendingExpiry = nil
+        }
+
         if let expiry = guidanceExpiry, Date() >= expiry {
             guidanceExpiry = nil
             guidance = .idle
