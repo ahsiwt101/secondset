@@ -1,0 +1,86 @@
+{
+  "trayID": "DEMO-01",
+  "displayName": "Bench Proxy Tray",
+  "procedure": "bench_test",
+  "markerImageName": "marker_demo_01",
+
+  "_note": "Scaffolding tray for testing the whole pipeline with household objects before real instruments and reference objects exist. Set referenceObjectName to match the NAME YOU GIVE THE REFERENCE OBJECT IN CREATE ML — by convention that name is the instrumentID. Delete this file before the demo.",
+
+  "geometry": {
+    "_units": "metres",
+    "_note": "Measure your actual bench setup and replace these. interiorSize is the area you lay the objects out over; trayOriginInMarkerSpace is where the near-left corner of that area sits relative to the centre of the printed marker.",
+    "interiorSize": [0.50, 0.05, 0.30],
+    "trayOriginInMarkerSpace": [0.25, 0.0, -0.02],
+    "trayYawInMarkerSpaceDegrees": 0.0,
+    "slotHeight": 0.010
+  },
+  "slots": [
+    {
+      "index": 0,
+      "instrumentID": "proxy_card_holder",
+      "displayName": "Magnetic Card Holder",
+      "aliases": ["card holder", "card", "holder", "wallet"],
+      "u": 0.20, "v": 0.25,
+      "footprint": [0.07, 0.10],
+      "label": "row 1 · pos 1",
+      "referenceObjectName": "proxy_card_holder",
+      "usagePhase": null
+    },
+    {
+      "index": 1,
+      "instrumentID": "proxy_bottle",
+      "displayName": "Water Bottle",
+      "aliases": ["bottle", "water bottle", "water"],
+      "u": 0.50, "v": 0.25,
+      "footprint": [0.08, 0.08],
+      "label": "row 1 · pos 2",
+      "referenceObjectName": "proxy_bottle",
+      "usagePhase": null
+    },
+    {
+      "index": 2,
+      "instrumentID": "proxy_phone",
+      "displayName": "Phone",
+      "aliases": ["phone", "mobile", "handset"],
+      "u": 0.80, "v": 0.25,
+      "footprint": [0.08, 0.16],
+      "label": "row 1 · pos 3",
+      "referenceObjectName": "proxy_phone",
+      "usagePhase": null
+    },
+    {
+      "index": 3,
+      "instrumentID": "proxy_mug",
+      "displayName": "Mug",
+      "aliases": ["mug", "cup", "coffee cup"],
+      "u": 0.20, "v": 0.70,
+      "footprint": [0.09, 0.09],
+      "label": "row 2 · pos 1",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 4,
+      "instrumentID": "proxy_stapler",
+      "displayName": "Stapler",
+      "aliases": ["stapler", "staple"],
+      "u": 0.50, "v": 0.70,
+      "footprint": [0.05, 0.16],
+      "label": "row 2 · pos 2",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 5,
+      "instrumentID": "proxy_scissors",
+      "displayName": "Office Scissors",
+      "aliases": ["scissors", "shears"],
+      "u": 0.80, "v": 0.70,
+      "footprint": [0.04, 0.18],
+      "label": "row 2 · pos 3",
+      "referenceObjectName": null,
+      "usagePhase": null
+    }
+  ],
+  "consumables": []
+}

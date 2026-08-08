@@ -1,0 +1,187 @@
+{
+  "trayID": "ORT-01",
+  "displayName": "Ortho Basic Tray",
+  "procedure": "total_knee",
+  "markerImageName": "marker_ort_01",
+  "geometry": {
+    "_units": "metres",
+    "_note": "interiorSize is [width(x), height(y), length(z)] of the tray interior. trayOriginInMarkerSpace is the pose of the TRAY origin expressed in MARKER space — MEASURE THIS WITH A TAPE, do not guess. Markers mount flat so roll and pitch are zero.",
+    "interiorSize": [0.46, 0.05, 0.28],
+    "trayOriginInMarkerSpace": [0.23, 0.0, -0.02],
+    "trayYawInMarkerSpaceDegrees": 0.0,
+    "slotHeight": 0.012
+  },
+  "slots": [
+    {
+      "index": 0,
+      "instrumentID": "mallet_ortho_1lb",
+      "displayName": "Orthopaedic Mallet 1 lb",
+      "aliases": ["mallet", "hammer", "the mallet"],
+      "u": 0.12, "v": 0.18,
+      "footprint": [0.09, 0.28],
+      "label": "row 1 · pos 1",
+      "referenceObjectName": "mallet_ortho_1lb",
+      "usagePhase": "exposure"
+    },
+    {
+      "index": 1,
+      "instrumentID": "osteotome_box_25mm",
+      "displayName": "Box Osteotome 25 mm",
+      "aliases": ["osteotome", "chisel", "box chisel"],
+      "u": 0.30, "v": 0.18,
+      "footprint": [0.04, 0.22],
+      "label": "row 1 · pos 2",
+      "referenceObjectName": "osteotome_box_25mm",
+      "usagePhase": "exposure"
+    },
+    {
+      "index": 2,
+      "instrumentID": "rongeur_bone_double",
+      "displayName": "Double-Action Bone Rongeur",
+      "aliases": ["rongeur", "biters", "bone nibbler", "ron jur"],
+      "u": 0.48, "v": 0.18,
+      "footprint": [0.05, 0.24],
+      "label": "row 1 · pos 3",
+      "referenceObjectName": "rongeur_bone_double",
+      "usagePhase": "exposure"
+    },
+    {
+      "index": 3,
+      "instrumentID": "curette_bone_large",
+      "displayName": "Bone Curette, large",
+      "aliases": ["curette", "bone curette", "scoop"],
+      "u": 0.66, "v": 0.18,
+      "footprint": [0.03, 0.20],
+      "label": "row 1 · pos 4",
+      "referenceObjectName": null,
+      "usagePhase": "dissection"
+    },
+    {
+      "index": 4,
+      "instrumentID": "rasp_bone_medium",
+      "displayName": "Bone Rasp, medium",
+      "aliases": ["rasp", "file", "bone file"],
+      "u": 0.84, "v": 0.18,
+      "footprint": [0.04, 0.24],
+      "label": "row 1 · pos 5",
+      "referenceObjectName": null,
+      "usagePhase": "exposure"
+    },
+    {
+      "index": 5,
+      "instrumentID": "mosquito_curved_5in",
+      "displayName": "Mosquito Forceps, curved 5\"",
+      "aliases": ["mosquito", "snap", "small clamp"],
+      "u": 0.12, "v": 0.48,
+      "footprint": [0.03, 0.13],
+      "label": "row 2 · pos 1",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 6,
+      "instrumentID": "kelly_hemostat_6in",
+      "displayName": "Kelly Hemostat 6\"",
+      "aliases": ["kelly", "clamp", "hemostat"],
+      "u": 0.28, "v": 0.48,
+      "footprint": [0.03, 0.16],
+      "label": "row 2 · pos 2",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 7,
+      "instrumentID": "needle_holder_mayo_hegar",
+      "displayName": "Mayo-Hegar Needle Holder",
+      "aliases": ["needle driver", "needle holder", "driver"],
+      "u": 0.44, "v": 0.48,
+      "footprint": [0.03, 0.17],
+      "label": "row 2 · pos 3",
+      "referenceObjectName": null,
+      "usagePhase": "closing"
+    },
+    {
+      "index": 8,
+      "instrumentID": "metzenbaum_scissors_7in",
+      "displayName": "Metzenbaum Scissors 7\"",
+      "aliases": ["metz", "metzenbaum", "tissue scissors", "scissors"],
+      "u": 0.60, "v": 0.48,
+      "footprint": [0.03, 0.19],
+      "label": "row 2 · pos 4",
+      "referenceObjectName": null,
+      "usagePhase": "dissection"
+    },
+    {
+      "index": 9,
+      "instrumentID": "mayo_scissors_straight_7in",
+      "displayName": "Mayo Scissors, straight 7\"",
+      "aliases": ["mayo", "heavy scissors", "suture scissors", "scissors"],
+      "u": 0.76, "v": 0.48,
+      "footprint": [0.03, 0.19],
+      "label": "row 2 · pos 5",
+      "referenceObjectName": null,
+      "usagePhase": "closing"
+    },
+    {
+      "index": 10,
+      "instrumentID": "adson_forceps_toothed",
+      "displayName": "Adson Tissue Forceps, toothed",
+      "aliases": ["adson", "pickups", "toothed forceps"],
+      "u": 0.12, "v": 0.78,
+      "footprint": [0.02, 0.12],
+      "label": "row 3 · pos 1",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 11,
+      "instrumentID": "scalpel_handle_3",
+      "displayName": "#3 Scalpel Handle",
+      "aliases": ["knife", "handle", "three handle", "blade handle"],
+      "u": 0.28, "v": 0.78,
+      "footprint": [0.02, 0.13],
+      "label": "row 3 · pos 2",
+      "referenceObjectName": null,
+      "usagePhase": "exposure"
+    },
+    {
+      "index": 12,
+      "instrumentID": "retractor_hohmann_narrow",
+      "displayName": "Hohmann Retractor, narrow",
+      "aliases": ["hohmann", "ho man", "bent retractor"],
+      "u": 0.46, "v": 0.78,
+      "footprint": [0.04, 0.24],
+      "label": "row 3 · pos 3",
+      "referenceObjectName": null,
+      "usagePhase": "exposure"
+    },
+    {
+      "index": 13,
+      "instrumentID": "depth_gauge",
+      "displayName": "Depth Gauge",
+      "aliases": ["depth gauge", "gauge", "measure"],
+      "u": 0.66, "v": 0.78,
+      "footprint": [0.02, 0.16],
+      "label": "row 3 · pos 4",
+      "referenceObjectName": null,
+      "usagePhase": "closing"
+    }
+  ],
+  "_ambiguityNote": "\"scissors\" deliberately maps to both Metzenbaum and Mayo. This is the term the demo says out loud to show the disambiguation card (SPEC §20 step 5). Keep it.",
+  "ambiguousAliases": ["scissors"],
+
+  "consumables": [
+    {
+      "consumableID": "vicryl_2_0_ct1",
+      "displayName": "2-0 Vicryl · CT-1",
+      "aliases": ["two oh vicryl", "vicryl", "two oh", "2-0 vicryl"],
+      "referenceImageName": "label_vicryl_2_0_ct1"
+    },
+    {
+      "consumableID": "blade_10",
+      "displayName": "#10 Blade",
+      "aliases": ["ten blade", "10 blade", "ten"],
+      "referenceImageName": "label_blade_10"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+name: SecondSet
+
+options:
+  bundleIdPrefix: com.secondset
+  createIntermediateGroups: true
+  developmentLanguage: en
+  deploymentTarget:
+    visionOS: "26.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+
+targets:
+  SecondSet:
+    type: application
+    platform: visionOS
+    sources:
+      - path: SecondSet
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.secondset.app
+        CODE_SIGN_STYLE: Automatic
+        # visionOS apps must declare the immersive-space capability set.
+        UIApplicationSceneManifest_Generation: NO
+    info:
+      path: SecondSet/Info.plist
+      properties:
+        CFBundleDisplayName: Second Set
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        UILaunchScreen: {}
+
+        # Missing any of these three is a launch-time crash, not a
+        # graceful failure. See SPEC §5.
+        NSWorldSensingUsageDescription: >-
+          Second Set maps the theatre surfaces and tracks instrument trays so it
+          can show you where an instrument is. No imagery leaves the device.
+        NSMicrophoneUsageDescription: >-
+          Second Set listens for instrument requests. Audio is processed in a
+          rolling buffer on-device and is never recorded or stored.
+        NSSpeechRecognitionUsageDescription: >-
+          Instrument requests are recognised entirely on-device against a fixed
+          vocabulary of instruments on the field.
+
+        UIApplicationSceneManifest:
+          UIApplicationPreferredDefaultSceneSessionRole: UIWindowSceneSessionRoleApplication
+          UIApplicationSupportsMultipleScenes: true
+          UISceneConfigurations: {}
+
+  SecondSetTests:
+    type: bundle.unit-test
+    platform: visionOS
+    sources:
+      - path: SecondSetTests
+    dependencies:
+      - target: SecondSet
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.secondset.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  SecondSet:
+    build:
+      targets:
+        SecondSet: all
+        SecondSetTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - SecondSetTests
