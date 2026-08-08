@@ -280,7 +280,6 @@ private struct GuidanceCard: View {
         }
         .padding(20)
         .background(.quaternary.opacity(0.45), in: RoundedRectangle(cornerRadius: 20))
-        .onAppear { session.extendGuidance() }
     }
 
     private var isNear: Bool {

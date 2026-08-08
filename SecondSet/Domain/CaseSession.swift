@@ -257,16 +257,21 @@ final class CaseSession {
     }
 
     func show(_ ref: SlotRef) {
-        guidanceExpiry = Date().addingTimeInterval(Tunables.guidanceTimeout)
+        // Long budget: this covers the walk to the tray, not the dwell once
+        // there. See Tunables.travelTimeout.
+        guidanceExpiry = Date().addingTimeInterval(Tunables.travelTimeout)
         // The tick loop immediately promotes this to far or near by distance.
         guidance = .guidingFar(ref)
         tick()
     }
 
-    /// Keep guidance alive while the wearer is still walking to the tray.
-    func extendGuidance() {
-        guard guidance.isGuiding else { return }
-        guidanceExpiry = Date().addingTimeInterval(Tunables.guidanceTimeout)
+    /// Debug-only: hold whatever guidance is currently showing open for a long
+    /// while, bypassing both the travel and dwell timers. `simctl screenshot`
+    /// round-trips run multiple seconds each and the real dwell window is 6s,
+    /// which made verifying near-mode rendering from outside the headset a
+    /// coin flip. Only ever called from the `-autodemo` path.
+    func pinGuidanceForDebugging(seconds: TimeInterval = 120) {
+        guidanceExpiry = Date().addingTimeInterval(seconds)
     }
 
     func stopGuiding() {
@@ -406,11 +411,21 @@ final class CaseSession {
         switch guidance {
         case .guidingFar where distance < goingNear:
             guidance = .guidingNear(ref, tier: pose.tier)
+            // Arrival. Swap the long travel budget for the short dwell one —
+            // the walk is over, so "ignored for 6s" becomes the right question
+            // to ask instead of "still walking?". This is the ONLY place the
+            // timer switches from travel to dwell; there is no other correct
+            // moment to do it.
+            guidanceExpiry = Date().addingTimeInterval(Tunables.guidanceTimeout)
         case .guidingNear where distance > goingFar:
+            // Stepped back. Restore the long budget — they are travelling
+            // again, not idling at the tray.
             guidance = .guidingFar(ref)
+            guidanceExpiry = Date().addingTimeInterval(Tunables.travelTimeout)
         case .guidingNear(let s, let tier) where tier != pose.tier:
             // Tier flipped under us (lock acquired or lost) — re-render so the
-            // callout wording and the outline style follow.
+            // callout wording and the outline style follow. Not an arrival
+            // event, so the dwell timer is left alone.
             guidance = .guidingNear(s, tier: pose.tier)
         default:
             break

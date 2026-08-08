@@ -192,8 +192,18 @@ enum Tunables {
     static let nearHysteresis: Float = 0.2         // metres
     static let crossfadeDuration: TimeInterval = 0.25
 
-    // Guidance lifetime.
+    // Guidance lifetime. Two different budgets for two different waits.
+    //
+    // `guidanceTimeout` covers standing AT the tray, having seen the answer,
+    // not acting on it — 6s of inattention is a reasonable "never mind".
+    //
+    // `travelTimeout` covers the walk from wherever the request was made to
+    // the tray. A real room is a few metres across; 6s is not enough time to
+    // cross it, and the far-mode beam vanishing mid-walk is a demo-breaking
+    // bug, not a feature. This is a safety net for "got pulled away
+    // entirely", not a normal-usage timer, hence the much longer budget.
     static let guidanceTimeout: TimeInterval = 6.0
+    static let travelTimeout: TimeInterval = 45.0
     static let listenWindow: TimeInterval = 3.0
 
     // Voice, SPEC §12.4.
@@ -212,4 +222,30 @@ enum Tunables {
     // Render, SPEC §14.
     static let calloutHeightAboveTray: Float = 0.08
     static let highlightFadeIn: TimeInterval = 0.15
+
+    // Beacon geometry. Tuned on device — these are the numbers to reach for
+    // when the beam looks too thin, too short, too faint, or too busy.
+    //
+    // 1.4 m clears head height (~1.6-1.8 m eye level, tray at ~0.9 m, so the
+    // column top sits around 2.3 m) while staying under a typical 2.4-2.7 m
+    // ceiling. The first cut at 2.0 m ran into the ceiling in testing.
+    static let beamHeight: Float = 1.4
+    static let beamCoreRadius: Float = 0.022      // was 0.012 — too thin to read at 2m+
+    static let beamSheathRadius: Float = 0.075    // was 0.040 — the soft glow around the core
+    static let poolDiameter: Float = 0.26
+    /// Halo radius as a multiple of the slot footprint, so it hugs the item.
+    static let haloFootprintScale: Float = 1.35
+
+    static let beamRiseDuration: TimeInterval = 0.45
+    static let retractDuration: TimeInterval = 0.35
+
+    // Breathing pulse, so a stationary beam still catches a peripheral glance.
+    // Slow and shallow — a fast or large pulse reads as an error state, not a
+    // guide. RealityKit's own animation clock drives this, not the SwiftUI
+    // update loop, so it costs nothing against the frame budget.
+    static let pulseScale: Float = 1.10
+    static let pulseDuration: TimeInterval = 1.3
+
+    static let moteBirthRate: Float = 34          // dust in a light shaft, not a firework
+    static let haloBirthRate: Float = 260
 }

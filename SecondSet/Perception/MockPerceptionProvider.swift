@@ -52,8 +52,30 @@ final class MockPerceptionProvider: PerceptionProvider {
         poseC.finish(); objectC.finish(); labelC.finish()
     }
 
+    /// A mild default downward tilt so the mock camera isn't perfectly
+    /// level forever — closer to how someone actually stands. `look(at:)`
+    /// below overrides this when the debug panel wants a precise framing;
+    /// this is just the resting state.
+    private var orientation = simd_quatf(angle: -14 * .pi / 180, axis: [1, 0, 0])
+
     func deviceTransform() -> simd_float4x4? {
-        simd_float4x4(translation: simulatedDevicePosition)
+        simd_float4x4(translation: simulatedDevicePosition) * simd_float4x4(orientation)
+    }
+
+    /// Point the mock camera at a world position. Real ARKit head pose comes
+    /// from wherever the wearer is actually looking; the mock has no such
+    /// input, so screenshots of anything below eye height were landing
+    /// outside the frame the moment `walk(to:)` brought the camera close —
+    /// not a rendering bug, just an unaimed test camera. This exists purely
+    /// to point that camera on demand so effects can actually be reviewed.
+    func look(at worldPosition: SIMD3<Float>) {
+        let toTarget = worldPosition - simulatedDevicePosition
+        guard simd_length(toTarget) > 1e-4 else { return }
+        let yaw = atan2(-toTarget.x, -toTarget.z)
+        let horizontal = simd_length(SIMD2(toTarget.x, toTarget.z))
+        let pitch = atan2(toTarget.y, horizontal)
+        orientation = simd_quatf(angle: yaw, axis: [0, 1, 0])
+                    * simd_quatf(angle: pitch, axis: [1, 0, 0])
     }
 
     func bindManually(trayID: String) {
