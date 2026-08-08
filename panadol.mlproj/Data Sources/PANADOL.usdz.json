@@ -1,0 +1,41 @@
+{
+  "activityEntities" : [
+    "dataSourceCreated",
+    [
+      {
+        "createdDate" : "2026-08-08T08:49:35Z",
+        "event" : "dataSourceCreated",
+        "id" : "9DCB62CA-DBC9-4560-8636-898B0BAE22F8",
+        "subtitle" : "PANADOL.usdz",
+        "title" : "Data Source Created"
+      }
+    ],
+    "dataSourceTrainingStarted",
+    [
+      {
+        "createdDate" : "2026-08-08T08:50:14Z",
+        "event" : "dataSourceTrainingStarted",
+        "id" : "0CD08FA9-62BD-4A70-9051-4EE99D2E1A82",
+        "subtitle" : "panadol 1",
+        "title" : "Used By"
+      }
+    ]
+  ],
+  "createdDate" : "2026-08-08T08:49:35Z",
+  "dataPathRelativeToProjectURL" : "../../Downloads/PANADOL.usdz/",
+  "dataResult" : {
+    "createdDate" : "2026-08-08T08:49:35Z",
+    "dataSourceID" : "E1CB61A2-202D-4220-9B90-BD4C3CFAA771",
+    "dataURL" : "file:///Users/twishamehta/Downloads/PANADOL.usdz"
+  },
+  "dataURL" : "file:///Users/twishamehta/Downloads/PANADOL.usdz",
+  "experimentIDs" : [
+    "C13B70E0-5C83-4925-B5B3-F15CC5297D10"
+  ],
+  "id" : "E1CB61A2-202D-4220-9B90-BD4C3CFAA771",
+  "modifiedDate" : "2026-08-08T08:50:14Z",
+  "pathType" : 0,
+  "preferredFilename" : "PANADOL.usdz",
+  "title" : "PANADOL.usdz",
+  "version" : "1.0"
+}

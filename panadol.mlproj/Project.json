@@ -1,0 +1,29 @@
+{
+  "activityEntities" : [
+    "projectCreated",
+    [
+      {
+        "createdDate" : "2026-08-08T08:49:24Z",
+        "event" : "projectCreated",
+        "id" : "4F73D9DA-BEDC-4F57-84A8-CE868DAB9A95",
+        "subtitle" : "panadol",
+        "title" : "Project Created"
+      }
+    ]
+  ],
+  "authorName" : "Twisha Mehta",
+  "createdDate" : "2026-08-08T08:49:24Z",
+  "description" : "",
+  "id" : "8E072BAE-5227-4A2C-B2BC-CFE789B5E604",
+  "license" : "",
+  "location" : "",
+  "modifiedDate" : "2026-08-08T08:49:24Z",
+  "projectName" : "panadol",
+  "settingsEntity" : {
+    "snapshotOnExtendTraining" : true,
+    "snapshotOnResumeTraining" : false
+  },
+  "taskType" : "known3DObjectTracker",
+  "title" : "Object Tracking",
+  "version" : "1.1"
+}

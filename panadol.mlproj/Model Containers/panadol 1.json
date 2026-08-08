@@ -1,0 +1,370 @@
+{
+  "activityEntities" : [
+    "experimentCreated",
+    [
+      {
+        "createdDate" : "2026-08-08T08:49:24Z",
+        "event" : "experimentCreated",
+        "id" : "C873D368-D5D2-4A59-8224-C7706274E034",
+        "subtitle" : "panadol 1",
+        "title" : "Model Source Created"
+      }
+    ],
+    "trainingDataAdded",
+    [
+      {
+        "createdDate" : "2026-08-08T08:49:35Z",
+        "event" : "trainingDataAdded",
+        "id" : "BB96EF8E-78E8-405B-B3C3-73BB8076E5A0",
+        "subtitle" : "PANADOL.usdz",
+        "title" : "Training Data Added"
+      }
+    ],
+    "trainingStarted",
+    [
+      {
+        "createdDate" : "2026-08-08T08:50:14Z",
+        "event" : "trainingStarted",
+        "id" : "DFDCC50F-EF10-4785-B7FA-DE1EA27FDD56",
+        "subtitle" : "panadol 1",
+        "title" : "Training Started"
+      }
+    ]
+  ],
+  "createdDate" : "2026-08-08T08:49:24Z",
+  "evaluationContainerEntity" : {
+    "createdDate" : "2026-08-08T10:50:27Z",
+    "evaluationEntities" : [
+
+    ],
+    "id" : "f6b89461-71cc-4747-8bf1-5b2692ea182b",
+    "modifiedDate" : "2026-08-08T10:50:27Z",
+    "previewType" : "unknown",
+    "testingEvaluationEntity" : {
+      "analysedDataType" : "none",
+      "createdDate" : "2026-08-08T08:49:24Z",
+      "dataResult" : {
+        "createdDate" : "2026-08-08T08:49:35Z"
+      },
+      "id" : "2e6e2d1d-1057-463d-9964-0b868d773dd4"
+    },
+    "trainingEvaluationEntity" : {
+      "analysedDataType" : "none",
+      "createdDate" : "2026-08-08T08:49:24Z",
+      "dataResult" : {
+        "createdDate" : "2026-08-08T08:49:35Z",
+        "dataAnalysis" : {
+          "classifierAnalysis" : {
+
+          },
+          "issues" : [
+
+          ],
+          "objectDetectorAnalysis" : {
+            "details" : {
+
+            }
+          },
+          "summary" : {
+
+          },
+          "usdzAnalysis" : {
+            "objectMeasurements" : [
+              {
+                "unit" : {
+                  "converter" : {
+                    "coefficient" : 1,
+                    "constant" : 0
+                  },
+                  "symbol" : "m"
+                },
+                "value" : 0.1865881085395813
+              },
+              {
+                "unit" : {
+                  "converter" : {
+                    "coefficient" : 1,
+                    "constant" : 0
+                  },
+                  "symbol" : "m"
+                },
+                "value" : 0.43781906366348267
+              },
+              {
+                "unit" : {
+                  "converter" : {
+                    "coefficient" : 1,
+                    "constant" : 0
+                  },
+                  "symbol" : "m"
+                },
+                "value" : 0.1579831838607788
+              }
+            ]
+          }
+        },
+        "dataSourceID" : "E1CB61A2-202D-4220-9B90-BD4C3CFAA771",
+        "dataURL" : "file:///Users/twishamehta/Downloads/PANADOL.usdz"
+      },
+      "dataSourceID" : "E1CB61A2-202D-4220-9B90-BD4C3CFAA771",
+      "id" : "2fdc69b0-557e-4cec-8bad-dc9a9981c194"
+    },
+    "validationEvaluationEntity" : {
+      "analysedDataType" : "auto",
+      "createdDate" : "2026-08-08T08:49:24Z",
+      "dataResult" : {
+        "createdDate" : "2026-08-08T08:49:35Z"
+      },
+      "id" : "931ba023-6ffd-4960-bf22-023aeadaebd9"
+    }
+  },
+  "evaluationEntity" : {
+    "analysedDataType" : "none",
+    "dataResult" : {
+
+    },
+    "id" : "23ff5d26-1928-415e-962c-19253f45a789"
+  },
+  "evaluationState" : "uninitialized",
+  "id" : "C13B70E0-5C83-4925-B5B3-F15CC5297D10",
+  "modelEntity" : {
+    "createdDate" : "2026-08-08T08:49:24Z",
+    "experimentID" : "C13B70E0-5C83-4925-B5B3-F15CC5297D10",
+    "id" : "A180A41F-5377-403A-A25F-6D107C07E3C3",
+    "modifiedDate" : "2026-08-08T08:49:24Z",
+    "title" : "",
+    "version" : "1.0"
+  },
+  "modifiedDate" : "2026-08-08T10:50:27Z",
+  "preferredFilename" : "panadol 1",
+  "settingEntity" : {
+    "algorithmType" : "maxEnt",
+    "augmentations" : [
+
+    ],
+    "featureNames" : [
+
+    ],
+    "handActionClassifierAugmentations" : [
+
+    ],
+    "handPoseClassifierAugmentations" : [
+
+    ],
+    "harVideoAugmentations" : 0,
+    "iterationCount" : 5,
+    "known3DObjectTrackerExcludesBacksideViews" : false,
+    "known3DObjectTrackerExcludesBottomViews" : false,
+    "known3DObjectTrackerIsGravityAligned" : false,
+    "known3DObjectTrackerNegativeObjectDataSourceIDs" : [
+
+    ],
+    "known3DObjectTrackerTrainingMode" : "standard",
+    "seedType" : "default",
+    "taskType" : "known3DObjectTracker",
+    "transferLearningEmbeddingType" : "dynamic"
+  },
+  "snapshotRole" : {
+    "withoutSnapshots" : 0
+  },
+  "state" : "ready",
+  "title" : "panadol 1",
+  "trainingEntity" : {
+    "analysedDataType" : "datasource",
+    "checkpointMetrics" : {
+      "2" : {
+        "createdDate" : "2026-08-08T09:56:45Z",
+        "iteration" : 2,
+        "metrics" : {
+          "timeElapsed" : 3991.032473087311
+        }
+      },
+      "3" : {
+        "createdDate" : "2026-08-08T10:21:29Z",
+        "iteration" : 3,
+        "metrics" : {
+          "timeElapsed" : 5474.189966082573
+        }
+      },
+      "4" : {
+        "createdDate" : "2026-08-08T10:49:14Z",
+        "iteration" : 4,
+        "metrics" : {
+          "timeElapsed" : 7140.101109027863
+        }
+      },
+      "5" : {
+        "createdDate" : "2026-08-08T10:50:27Z",
+        "iteration" : 5,
+        "metrics" : {
+          "timeElapsed" : 7212.704253077507
+        }
+      }
+    },
+    "dataResult" : {
+      "createdDate" : "2026-08-08T08:49:35Z",
+      "dataAnalysis" : {
+        "classifierAnalysis" : {
+
+        },
+        "issues" : [
+
+        ],
+        "objectDetectorAnalysis" : {
+          "details" : {
+
+          }
+        },
+        "summary" : {
+
+        },
+        "usdzAnalysis" : {
+          "objectMeasurements" : [
+            {
+              "unit" : {
+                "converter" : {
+                  "coefficient" : 1,
+                  "constant" : 0
+                },
+                "symbol" : "m"
+              },
+              "value" : 0.1865881085395813
+            },
+            {
+              "unit" : {
+                "converter" : {
+                  "coefficient" : 1,
+                  "constant" : 0
+                },
+                "symbol" : "m"
+              },
+              "value" : 0.43781906366348267
+            },
+            {
+              "unit" : {
+                "converter" : {
+                  "coefficient" : 1,
+                  "constant" : 0
+                },
+                "symbol" : "m"
+              },
+              "value" : 0.1579831838607788
+            }
+          ]
+        }
+      },
+      "dataSourceID" : "E1CB61A2-202D-4220-9B90-BD4C3CFAA771",
+      "dataURL" : "file:///Users/twishamehta/Downloads/PANADOL.usdz"
+    },
+    "dataSourceID" : "E1CB61A2-202D-4220-9B90-BD4C3CFAA771",
+    "featureExtractionCheckpointMayBeAvailable" : false,
+    "progress" : [
+      {
+        "count" : 54721,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : true,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 1,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "known3DObjectDetectorTrainingColumnHeader" : {
+          "batch" : 3000,
+          "elapsedTime" : 1512.347983956337,
+          "iterationCount" : 1,
+          "loss" : 0.8648248314857483,
+          "totalBatches" : 3437,
+          "trainingAccuracy" : 0
+        },
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 1
+      },
+      {
+        "count" : 2,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "known3DObjectDetectorTrainingColumnHeader" : {
+          "batch" : 3000,
+          "elapsedTime" : 3020.501305937767,
+          "iterationCount" : 2,
+          "loss" : 0.5676060318946838,
+          "totalBatches" : 3437,
+          "trainingAccuracy" : 0
+        },
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 1
+      },
+      {
+        "count" : 3,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "known3DObjectDetectorTrainingColumnHeader" : {
+          "batch" : 3000,
+          "elapsedTime" : 4503.678470015526,
+          "iterationCount" : 3,
+          "loss" : 1.0696756839752197,
+          "totalBatches" : 3437,
+          "trainingAccuracy" : 0
+        },
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 1
+      },
+      {
+        "count" : 4,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "known3DObjectDetectorTrainingColumnHeader" : {
+          "batch" : 3000,
+          "elapsedTime" : 6169.572587013245,
+          "iterationCount" : 4,
+          "loss" : 0.56734299659729,
+          "totalBatches" : 3437,
+          "trainingAccuracy" : 0
+        },
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 1
+      },
+      {
+        "count" : 5,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "known3DObjectDetectorTrainingColumnHeader" : {
+          "batch" : 0,
+          "elapsedTime" : 6242.113337993622,
+          "iterationCount" : 5,
+          "loss" : 0.45234620571136475,
+          "totalBatches" : 3437,
+          "trainingAccuracy" : 0
+        },
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 1
+      }
+    ],
+    "snapshottableCheckpoints" : {
+
+    },
+    "startTime" : "2026-08-08T08:50:14Z"
+  },
+  "validationEntity" : {
+    "analysedDataType" : "auto",
+    "dataResult" : {
+      "createdDate" : "2026-08-08T08:49:35Z"
+    },
+    "splitOptions" : {
+      "strategy" : {
+        "automatic" : {
+
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
