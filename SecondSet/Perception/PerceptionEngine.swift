@@ -39,6 +39,9 @@ final class PerceptionEngine: PerceptionProvider {
 
     /// Detections are only promoted after N consecutive stable observations.
     private var pendingDetections: [String: (count: Int, transform: simd_float4x4)] = [:]
+    /// Same debounce, applied to "did the already-promoted tray move" rather
+    /// than first detection.
+    private var pendingMoves: [String: (count: Int, transform: simd_float4x4)] = [:]
     private var promoted: [String: simd_float4x4] = [:]
 
     var onHealthChange: ((PerceptionHealth) -> Void)?
@@ -207,12 +210,34 @@ final class PerceptionEngine: PerceptionProvider {
 
         // Already promoted: the marker is now a correction signal only. If it
         // disagrees materially the tray was physically moved — re-anchor.
+        //
+        // Requires the same N-consecutive-stable-observations debounce as
+        // first detection below, not a single frame's delta. A lone noisy
+        // pose estimate (glare, a bit of distance, motion blur) is normal
+        // for image tracking and used to re-promote on every such frame —
+        // confirmed on-device: 8 re-anchors in a few seconds, each one a
+        // fresh WorldAnchor and a full resolver rebuild, which is exactly
+        // what made guidance look sluggish and unstable. A real tray move
+        // is still caught just as fast, it just has to be a real, settled
+        // move rather than one jittery frame.
         if let existing = promoted[trayID] {
             let moved = positionalDelta(existing, originFromTray) > Tunables.trayMovedPositionThreshold
                      || angularDelta(existing, originFromTray) > Tunables.trayMovedAngleThreshold
-            if moved {
+            guard moved else {
+                pendingMoves[trayID] = nil
+                return
+            }
+
+            var pending = pendingMoves[trayID] ?? (0, originFromTray)
+            let jitter = positionalDelta(pending.transform, originFromTray)
+            pending.count = jitter < 0.02 ? pending.count + 1 : 1
+            pending.transform = originFromTray
+            pendingMoves[trayID] = pending
+
+            if pending.count >= Tunables.stableDetectionCount {
                 Log.perception.info("Tray \(trayID) moved — re-anchoring")
                 promote(trayID: trayID, originFromTray: originFromTray)
+                pendingMoves[trayID] = nil
             }
             return
         }
