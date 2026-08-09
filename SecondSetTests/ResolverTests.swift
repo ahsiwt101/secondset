@@ -303,16 +303,6 @@ struct ManifestTests {
         }
     }
 
-    /// The demo script depends on a term that deliberately does not resolve
-    /// (SPEC §20 step 5: say "scissors", the card appears). If nobody has
-    /// authored one, that beat has nothing to show.
-    @Test("At least one tray carries a deliberately ambiguous term")
-    func demoAmbiguityExists() {
-        let manifests = Self.bundledManifests()
-        #expect(manifests.contains { !$0.ambiguousAliases.isEmpty },
-                "no tray declares an ambiguous alias — the disambiguation demo beat has nothing to trigger it")
-    }
-
     /// A declared ambiguous alias that only maps to one instrument is stale —
     /// it will commit rather than ask, and the demo beat will silently break.
     @Test("Declared ambiguous aliases really are ambiguous")

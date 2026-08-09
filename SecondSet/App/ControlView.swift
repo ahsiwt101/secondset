@@ -59,7 +59,7 @@ struct ControlView: View {
         Log.session.info("autodemo: registered trays, flow=operating")
         try? await Task.sleep(for: .milliseconds(500))
 
-        providers.mockVoice?.say("mosquito")
+        providers.mockVoice?.say("angel charm")
         try? await Task.sleep(for: .milliseconds(300))
         session.confirmFind()
         Log.session.info("autodemo: confirmed find, guidance=\(String(describing: session.guidance))")

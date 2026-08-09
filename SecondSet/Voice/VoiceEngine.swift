@@ -42,8 +42,20 @@ final class VoiceEngine: VoiceProvider {
         guard let recognizer, recognizer.isAvailable else { throw VoiceError.recognizerUnavailable }
         guard recognizer.supportsOnDeviceRecognition else { throw VoiceError.onDeviceUnsupported }
 
+        // @Sendable pins this closure as nonisolated. Without it, the compiler
+        // infers MainActor isolation from the enclosing method (the SDK's
+        // handler parameter isn't marked @Sendable), and Swift 6's strict
+        // concurrency then inserts a dynamic check that the closure actually
+        // runs on the main actor. It doesn't: TCC invokes this completion
+        // handler from its own XPC reply queue, not the main actor, so that
+        // check trapped instead of throwing — the app died before any
+        // permission dialog could show. `resume` is safe from any thread by
+        // design, so nonisolated is also the correct fix, not just the one
+        // that avoids the trap.
         let speechOK = await withCheckedContinuation { c in
-            SFSpeechRecognizer.requestAuthorization { c.resume(returning: $0 == .authorized) }
+            SFSpeechRecognizer.requestAuthorization { @Sendable status in
+                c.resume(returning: status == .authorized)
+            }
         }
         guard speechOK else { throw VoiceError.permissionDenied }
 
@@ -111,16 +123,26 @@ final class VoiceEngine: VoiceProvider {
 
         // The tap callback is real-time: no allocation, no locking, no await.
         // Copy the buffer into the recognition request and return. SPEC §15.
+        // @Sendable for the same reason as the two closures above — this one
+        // is the one that actually crashed: the tap runs on AVAudioEngine's
+        // real-time thread (confirmed via the trap's own backtrace, inside
+        // AVAudioNodeTap::TapMessage::RealtimeMessenger_Perform), never the
+        // main actor, so an inferred MainActor isolation here is guaranteed
+        // to trap on literally every audio buffer.
         let box = RequestBox(request)
         input.removeTap(onBus: 0)
-        input.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
+        input.installTap(onBus: 0, bufferSize: 1024, format: format) { @Sendable buffer, _ in
             box.append(buffer)
         }
 
         audioEngine.prepare()
         try audioEngine.start()
 
-        task = recognizer?.recognitionTask(with: request) { [weak self] result, error in
+        // @Sendable for the same reason as the authorization closure above:
+        // Speech invokes this from its own internal queue, not the main
+        // actor, and an inferred MainActor isolation here traps instead of
+        // just hopping via the Task below.
+        task = recognizer?.recognitionTask(with: request) { @Sendable [weak self] result, error in
             guard let self else { return }
             if let error {
                 Task { @MainActor in Log.voice.debug("Recognition ended: \(error.localizedDescription)") }
