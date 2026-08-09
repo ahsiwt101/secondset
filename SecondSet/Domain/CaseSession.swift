@@ -89,6 +89,7 @@ final class CaseSession {
         let renderer = GuidanceRenderer(root: rootEntity)
         renderer.preallocate(for: manifests)
         self.renderer = renderer
+        await renderer.prepareAudio()
 
         await rebuildResolver()
     }

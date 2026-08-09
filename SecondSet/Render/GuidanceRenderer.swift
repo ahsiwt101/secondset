@@ -15,7 +15,7 @@ final class GuidanceRenderer {
 
     /// The answer. There is only ever one — a second gold beacon would mean
     /// the system was claiming two things at once.
-    private let primary = Beacon(tint: .gold)
+    private let primary = Beacon(tint: .gold, enablesAudio: true)
 
     /// Candidates when a phrase maps to several items. Multiplicity is what
     /// communicates "choose", which is why these are the same shape as the
@@ -54,6 +54,28 @@ final class GuidanceRenderer {
             }
         }
         Log.render.info("Preallocated \(self.ghosts.count) ghosts, 4 beacons")
+    }
+
+    /// `AudioFileResource` loads async, unlike everything else built at
+    /// launch — one extra step, called once from `CaseSession.prepare()`.
+    /// The `Data`-based initializer is visionOS 27+ only; writing to a temp
+    /// file and loading via `contentsOf:` works back to the deployment
+    /// target instead. Failure here is silent-degrade only: the beam and
+    /// halo work exactly as before, the wearer just loses the locator ping
+    /// and has to visually scan for the beam once it's in view, same as
+    /// before this existed.
+    func prepareAudio() async {
+        do {
+            let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent("locator-tone-\(UUID().uuidString).wav")
+            try LocatorTone.wavData().write(to: url)
+            let resource = try await AudioFileResource(
+                contentsOf: url,
+                configuration: .init(loadingStrategy: .preload, shouldLoop: true))
+            primary.setLocatorAudio(resource)
+        } catch {
+            Log.render.error("Locator tone failed to load: \(error.localizedDescription)")
+        }
     }
 
     // MARK: - Tray placement

@@ -56,10 +56,17 @@ final class Beacon {
     private let tint: Tint
     private var mode: Mode = .hidden
 
+    /// Only the primary (gold) beacon gets a locator ping — three candidate
+    /// beacons all pinging at once in the ambiguous case would be noise, not
+    /// guidance, and that's not the problem being solved here anyway.
+    private let enablesAudio: Bool
+    private var locatorAudio: AudioResource?
+
     // MARK: - Build
 
-    init(tint: Tint) {
+    init(tint: Tint, enablesAudio: Bool = false) {
         self.tint = tint
+        self.enablesAudio = enablesAudio
 
         let h = Tunables.beamHeight
         core = ModelEntity(mesh: .generateCylinder(height: h, radius: Tunables.beamCoreRadius),
@@ -92,8 +99,31 @@ final class Beacon {
         motes.components.set(Self.risingMotes(tint: tint))
         haloParticles.components.set(Self.orbitingHalo(radius: 0.06, tint: tint))
 
+        if enablesAudio {
+            root.spatialAudio = SpatialAudioComponent(gain: -6, distanceAttenuation: .default)
+        }
+
         setEnabled(column: false, pool: false, halo: false)
         startPulse()
+    }
+
+    /// Loaded asynchronously (`AudioFileResource(from:)` is async) once at
+    /// launch by `GuidanceRenderer.prepareAudio()`, then handed in here. Far
+    /// mode may already be active by the time this arrives — in that case
+    /// start it immediately rather than waiting for the next transition.
+    func setLocatorAudio(_ resource: AudioResource) {
+        locatorAudio = resource
+        if mode == .far { startLocatorAudio() }
+    }
+
+    private func startLocatorAudio() {
+        guard enablesAudio, let locatorAudio else { return }
+        root.playAudio(locatorAudio)
+    }
+
+    private func stopLocatorAudio() {
+        guard enablesAudio else { return }
+        root.stopAllAudio()
     }
 
     /// A slow, shallow breathing scale on the sheath — the layer with the
@@ -200,6 +230,12 @@ final class Beacon {
         guard newMode != mode else { return }
         let previous = mode
         mode = newMode
+
+        if newMode == .far && previous != .far {
+            startLocatorAudio()
+        } else if previous == .far && newMode != .far {
+            stopLocatorAudio()
+        }
 
         switch newMode {
         case .hidden:

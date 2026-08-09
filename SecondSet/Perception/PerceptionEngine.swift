@@ -60,7 +60,13 @@ final class PerceptionEngine: PerceptionProvider {
             markerToTray[m.markerImageName] = m.trayID
             for c in m.consumables { labelToConsumable[c.referenceImageName] = c.consumableID }
         }
-        worldAnchorToTray = anchorStore.load()
+        // Persistence deliberately off for now: registering the tray is part
+        // of the demo, not overhead to skip. Loading past bindings here would
+        // make a previously-seen tray promote itself the instant ARKit
+        // resurfaces its WorldAnchor, before the marker is ever back in view.
+        // `anchorStore.save` below is left in place — flip this back to
+        // `anchorStore.load()` to restore cross-launch memory later.
+        worldAnchorToTray = [:]
 
         // Tier 1 + Tier 2 both ride ImageTrackingProvider: tray markers and
         // printed packet labels are the same mechanism. SPEC §9.
