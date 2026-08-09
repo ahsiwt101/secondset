@@ -1,0 +1,64 @@
+{
+  "trayID": "DR-11",
+  "displayName": "General Tray",
+  "procedure": "demo",
+  "markerImageName": "marker_dr_11",
+
+  "_note": "First real physical tray. Box is the pink 'HALZON' carton lying flat, printed face up, centred on the tray — that's the ARKit image marker AND the horizontal divider. Geometry below was measured from the box's known printed-face width (12.6cm) plus pixel ratios read off the overhead photo (IMG_8736), same method as SPEC §11 describes. Re-measure trayOriginInMarkerSpace with a tape if placement looks off by a constant amount in one direction.",
+
+  "geometry": {
+    "_units": "metres",
+    "interiorSize": [0.218, 0.02, 0.276],
+    "trayOriginInMarkerSpace": [-0.107, 0.0, -0.123],
+    "trayYawInMarkerSpaceDegrees": 0.0,
+    "slotHeight": 0.010
+  },
+  "slots": [
+    {
+      "index": 0,
+      "instrumentID": "charm_angel",
+      "displayName": "Angel Charm",
+      "aliases": ["angel charm", "angel", "fairy charm", "charm"],
+      "u": 0.23, "v": 0.17,
+      "footprint": [0.08, 0.08],
+      "label": "top-left",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 1,
+      "instrumentID": "scissors_small",
+      "displayName": "Small Scissors",
+      "aliases": ["scissors", "shears", "small scissors"],
+      "u": 0.69, "v": 0.20,
+      "footprint": [0.10, 0.16],
+      "label": "top-right",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 2,
+      "instrumentID": "card_holder",
+      "displayName": "Magnetic Card Holder",
+      "aliases": ["card holder", "card", "holder", "wallet"],
+      "u": 0.25, "v": 0.77,
+      "footprint": [0.10, 0.12],
+      "label": "bottom-left",
+      "referenceObjectName": null,
+      "usagePhase": null
+    },
+    {
+      "index": 3,
+      "instrumentID": "usb_cable",
+      "displayName": "USB Cable",
+      "aliases": ["cable", "usb cable", "charger cable", "cord"],
+      "u": 0.77, "v": 0.78,
+      "footprint": [0.12, 0.12],
+      "label": "bottom-right",
+      "referenceObjectName": null,
+      "usagePhase": null
+    }
+  ],
+  "ambiguousAliases": [],
+  "consumables": []
+}
