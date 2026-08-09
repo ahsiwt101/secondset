@@ -138,6 +138,18 @@ final class PerceptionEngine: PerceptionProvider {
     /// than hard-coding names means a freshly trained object is picked up by
     /// dropping the file in, with no code change. Given training runs for hours
     /// and lands at unpredictable times, that matters.
+    ///
+    /// ⚠️ The `do/catch` below is real protection against a THROWN error, but
+    /// it cannot protect against everything. Confirmed empirically: a
+    /// malformed or version-incompatible `.referenceobject` makes
+    /// `ReferenceObject(from:)` hit a native fatalError
+    /// ("ar_reference_object_load_from_url failed") that takes the whole
+    /// process down, not a Swift error this catches. Every other perception
+    /// input in this file degrades gracefully by design (SPEC §17) — this is
+    /// the one exception, and no amount of wrapping fixes it, because Swift
+    /// cannot catch a fatalError. The only real mitigation is discipline: test
+    /// a freshly exported reference object on device immediately, before it
+    /// ships in a build anyone else runs.
     private func loadReferenceObjects() async -> [ReferenceObject] {
         let urls = Bundle.main.urls(forResourcesWithExtension: "referenceobject",
                                     subdirectory: nil) ?? []
