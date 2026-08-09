@@ -11,6 +11,14 @@ struct SecondSetApp: App {
         WindowGroup {
             ControlView(providers: providers)
                 .environment(session)
+                // Bumped for pitch/demo legibility: this window gets mirrored
+                // to a Mac for judges to watch, and body-sized text that's
+                // perfectly readable worn on-device reads small once
+                // AirPlay-mirrored and viewed from normal laptop distance.
+                // One dynamicTypeSize scales every font AND the window
+                // itself (.contentSize below fits to it), rather than
+                // hand-tuning each .font() call individually.
+                .dynamicTypeSize(.accessibility2)
                 .task {
                     session.configure(perception: providers.perception,
                                       voice: providers.voice)

@@ -222,6 +222,10 @@ enum Tunables {
     // Render, SPEC §14.
     static let calloutHeightAboveTray: Float = 0.08
     static let highlightFadeIn: TimeInterval = 0.15
+    /// World-space text height, metres. Bumped for pitch/demo legibility —
+    /// this reads fine worn on-device but small once AirPlay-mirrored to a
+    /// laptop for judges to watch from normal viewing distance.
+    static let calloutFontSize: Float = 0.032
 
     // Beacon geometry. Tuned on device — these are the numbers to reach for
     // when the beam looks too thin, too short, too faint, or too busy.

@@ -184,7 +184,7 @@ final class GuidanceRenderer {
             calloutText.model = ModelComponent(
                 mesh: .generateText(string,
                                     extrusionDepth: 0.0004,
-                                    font: .systemFont(ofSize: 0.022, weight: .medium),
+                                    font: .systemFont(ofSize: CGFloat(Tunables.calloutFontSize), weight: .medium),
                                     containerFrame: .zero,
                                     alignment: .center,
                                     lineBreakMode: .byWordWrapping),

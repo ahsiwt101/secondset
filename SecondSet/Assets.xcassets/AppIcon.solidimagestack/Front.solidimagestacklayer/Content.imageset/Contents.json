@@ -1,0 +1,6 @@
+{
+  "images" : [
+    { "idiom" : "vision", "filename" : "Front.png" }
+  ],
+  "info" : { "author" : "xcode", "version" : 1 }
+}
