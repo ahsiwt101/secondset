@@ -160,12 +160,20 @@ final class CaseSession {
             Log.perception.debug("Pose for unknown tray \(pose.trayID)")
             return
         }
+        let wasBound = tray.isBound
         tray.originFromTray = pose.originFromTray
         tray.worldAnchorID = pose.worldAnchorID
         trays[pose.trayID] = tray
 
         health.boundTrayCount = trays.values.count(where: \.isBound)
         renderer?.updateTray(tray, manifest: tray.manifest)
+        // Fires once, exactly on the unbound→bound transition — not on every
+        // pose update afterward (re-anchor corrections stream through this
+        // same path). A confirmation the wearer can register without needing
+        // to be looking at the 2D setup list, deliberately not another halo.
+        if !wasBound {
+            renderer?.announceRegistration(at: pose.originFromTray)
+        }
         Task { await rebuildResolver() }
     }
 

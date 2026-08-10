@@ -90,7 +90,7 @@ struct SetupView: View {
 
     private var welcomeStep: some View {
         VStack(alignment: .leading, spacing: 22) {
-            Text("When the surgeon asks for an instrument, Second Set shows you where it is.")
+            Text("When the surgeon asks for an instrument, Op-Naut shows you where it is.")
                 .font(.title3)
 
             explainer(icon: "ear", title: "It listens",
@@ -110,7 +110,7 @@ struct SetupView: View {
 
     private var enableStep: some View {
         VStack(alignment: .leading, spacing: 22) {
-            Text("Second Set needs to see the room and hear instrument names.")
+            Text("Op-Naut needs to see the room and hear instrument names.")
                 .font(.title3)
 
             explainer(icon: "cube.transparent", title: "Room sensing",

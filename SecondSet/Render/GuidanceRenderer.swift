@@ -28,6 +28,12 @@ final class GuidanceRenderer {
     private var calloutText = ModelEntity()
     private var lastCalloutString = ""
 
+    /// One-shot confirmation when a tray first registers — deliberately not
+    /// another beacon. Preallocated like everything else here (SPEC §14);
+    /// only its transform and the fact that `playAudio` gets called move.
+    private let registrationAnnounce = Entity()
+    private var registrationChime: AudioResource?
+
     init(root: Entity) {
         self.root = root
 
@@ -37,6 +43,9 @@ final class GuidanceRenderer {
         callout.isEnabled = false
         callout.addChild(calloutText)
         root.addChild(callout)
+
+        registrationAnnounce.spatialAudio = SpatialAudioComponent(gain: -4, distanceAttenuation: .default)
+        root.addChild(registrationAnnounce)
     }
 
     // MARK: - Preallocation
@@ -76,6 +85,26 @@ final class GuidanceRenderer {
         } catch {
             Log.render.error("Locator tone failed to load: \(error.localizedDescription)")
         }
+
+        do {
+            let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent("registration-chime-\(UUID().uuidString).wav")
+            try RegistrationChime.wavData().write(to: url)
+            registrationChime = try await AudioFileResource(
+                contentsOf: url,
+                configuration: .init(loadingStrategy: .preload, shouldLoop: false))
+        } catch {
+            Log.render.error("Registration chime failed to load: \(error.localizedDescription)")
+        }
+    }
+
+    /// Called once, exactly when a tray moves from unbound to bound —
+    /// `CaseSession.apply(_:TrayPose)` guards the transition so this never
+    /// repeats on the pose corrections that follow.
+    func announceRegistration(at transform: simd_float4x4) {
+        guard let registrationChime else { return }
+        registrationAnnounce.transform = Transform(matrix: transform)
+        registrationAnnounce.playAudio(registrationChime)
     }
 
     // MARK: - Tray placement

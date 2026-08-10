@@ -36,17 +36,17 @@ targets:
     info:
       path: SecondSet/Info.plist
       properties:
-        CFBundleDisplayName: Second Set
+        CFBundleDisplayName: Op-Naut
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         UILaunchScreen: {}
 
         # Missing any of these three is a launch-time crash, not a
         # graceful failure. See SPEC §5.
         NSWorldSensingUsageDescription: >-
-          Second Set maps the theatre surfaces and tracks instrument trays so it
+          Op-Naut maps the theatre surfaces and tracks instrument trays so it
           can show you where an instrument is. No imagery leaves the device.
         NSMicrophoneUsageDescription: >-
-          Second Set listens for instrument requests. Audio is processed in a
+          Op-Naut listens for instrument requests. Audio is processed in a
           rolling buffer on-device and is never recorded or stored.
         NSSpeechRecognitionUsageDescription: >-
           Instrument requests are recognised entirely on-device against a fixed

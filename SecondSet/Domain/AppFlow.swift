@@ -18,7 +18,7 @@ enum SetupStep: Int, CaseIterable, Equatable {
 
     var title: String {
         switch self {
-        case .welcome:       return "Second Set"
+        case .welcome:       return "Op-Naut"
         case .enableSensing: return "Let it see the room"
         case .registerTrays: return "Find your trays"
         case .ready:         return "Ready"
