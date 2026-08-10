@@ -172,9 +172,15 @@ final class CaseSession {
         // same path). A confirmation the wearer can register without needing
         // to be looking at the 2D setup list, deliberately not another halo.
         if !wasBound {
-            let interior = tray.manifest.geometry.interior
-            renderer?.announceRegistration(at: pose.originFromTray,
-                                           footprint: SIMD2(interior.x, interior.z))
+            let g = tray.manifest.geometry
+            // pose.originFromTray is the tray's origin CORNER (u=0, v=0 —
+            // same convention SlotSpec.trayFromSlot uses), not its centre.
+            // Centring the flash on the corner put half of it past the
+            // tray's actual edge, which is exactly the "floating rectangle
+            // in the air" reported after testing on device.
+            let center = simd_float4x4(translation: SIMD3(g.interior.x / 2, g.slotHeight, g.interior.z / 2))
+            renderer?.announceRegistration(at: pose.originFromTray * center,
+                                           footprint: SIMD2(g.interior.x, g.interior.z))
         }
         Task { await rebuildResolver() }
     }
