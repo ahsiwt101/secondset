@@ -52,7 +52,13 @@ final class GuidanceRenderer {
         callout.addChild(calloutText)
         root.addChild(callout)
 
-        registrationAnnounce.spatialAudio = SpatialAudioComponent(gain: -4, distanceAttenuation: .default)
+        // Channel (non-spatial) rather than spatial: this is a UI
+        // confirmation, not a thing in the room to turn toward, so it should
+        // sound identical whether the tray is at arm's length or across the
+        // room. Being non-spatial also means it survives screen mirroring at
+        // a consistent level, which matters when demoing to an audience
+        // watching a mirrored screen rather than wearing the headset.
+        registrationAnnounce.channelAudio = ChannelAudioComponent(gain: 0)
         root.addChild(registrationAnnounce)
 
         registrationFlash.isEnabled = false

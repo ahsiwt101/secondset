@@ -100,7 +100,10 @@ final class Beacon {
         haloParticles.components.set(Self.orbitingHalo(radius: 0.06, tint: tint))
 
         if enablesAudio {
-            root.spatialAudio = SpatialAudioComponent(gain: -6, distanceAttenuation: .default)
+            // 0 dB, not trimmed: `.measurement` mode on the audio session
+            // (kept for recognition accuracy) already lowers output level,
+            // and this one has to carry across a room to be useful at all.
+            root.spatialAudio = SpatialAudioComponent(gain: 0, distanceAttenuation: .default)
         }
 
         setEnabled(column: false, pool: false, halo: false)

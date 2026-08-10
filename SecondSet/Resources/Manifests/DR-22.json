@@ -4,59 +4,59 @@
   "procedure": "demo",
   "markerImageName": "marker_dr_22",
 
-  "_note": "Second real physical tray. Marker is the white power adaptor lying flat, folded prongs pointing left, centred on the tray. Unlike DR-11's box this has almost no printed contrast — mostly uniform white plastic, only the dark prong pins and a faint seam line for ARKit to key off. Geometry measured the same way as DR-11: adaptor's known real width (7cm) plus pixel ratios read off the overhead photo (IMG_8763).",
+  "_note": "Marker is the Dilmah strawberry tea packet, centred on the tray. Replaced the adaptor as marker after it failed to auto-detect across several on-device attempts — nearly uniform white plastic gave ARKit almost nothing to key on. The tea packet is dense printed colour with asymmetric layout, which is what image tracking actually wants. The adaptor is now an ordinary findable slot instead. Geometry from IMG_8771: tea packet's measured 6.5cm short edge as the scale reference, everything else read off pixel ratios.",
 
   "geometry": {
     "_units": "metres",
-    "interiorSize": [0.229, 0.02, 0.173],
-    "trayOriginInMarkerSpace": [-0.105, 0.0, -0.085],
+    "interiorSize": [0.266, 0.02, 0.370],
+    "trayOriginInMarkerSpace": [-0.124, 0.0, -0.198],
     "trayYawInMarkerSpaceDegrees": 0.0,
     "slotHeight": 0.010
   },
   "slots": [
     {
       "index": 0,
-      "instrumentID": "tooth_mousse",
-      "displayName": "Tooth Mousse",
-      "aliases": ["tooth mousse", "mousse", "gc mousse"],
-      "u": 0.15, "v": 0.21,
-      "footprint": [0.08, 0.08],
+      "instrumentID": "adaptor",
+      "displayName": "Power Adaptor",
+      "aliases": ["adaptor", "adapter", "plug", "charger", "power adaptor"],
+      "u": 0.24, "v": 0.19,
+      "footprint": [0.09, 0.12],
       "label": "top-left",
       "referenceObjectName": null,
       "usagePhase": null
     },
     {
       "index": 1,
-      "instrumentID": "needle_holder",
-      "displayName": "Needle Holder",
-      "aliases": ["needle holder", "needle driver", "driver"],
-      "u": 0.70, "v": 0.21,
-      "footprint": [0.12, 0.16],
+      "instrumentID": "tooth_mousse",
+      "displayName": "Tooth Mousse",
+      "aliases": ["tooth mousse", "mousse", "gc mousse", "toothpaste"],
+      "u": 0.80, "v": 0.22,
+      "footprint": [0.08, 0.15],
       "label": "top-right",
       "referenceObjectName": null,
-      "usagePhase": "closing"
+      "usagePhase": null
     },
     {
       "index": 2,
-      "instrumentID": "tea_packet",
-      "displayName": "Strawberry Tea",
-      "aliases": ["tea", "tea bag", "tea packet", "strawberry tea", "dilmah"],
-      "u": 0.16, "v": 0.74,
-      "footprint": [0.08, 0.07],
+      "instrumentID": "kinder_joy",
+      "displayName": "Kinder Joy",
+      "aliases": ["kinder joy", "kinder egg", "chocolate egg", "kinder"],
+      "u": 0.19, "v": 0.80,
+      "footprint": [0.10, 0.09],
       "label": "bottom-left",
       "referenceObjectName": null,
       "usagePhase": null
     },
     {
       "index": 3,
-      "instrumentID": "kinder_joy",
-      "displayName": "Kinder Joy",
-      "aliases": ["kinder joy", "kinder egg", "chocolate egg", "kinder"],
-      "u": 0.78, "v": 0.76,
-      "footprint": [0.08, 0.08],
+      "instrumentID": "needle_holder",
+      "displayName": "Needle Holder",
+      "aliases": ["needle holder", "needle driver", "driver", "forceps"],
+      "u": 0.77, "v": 0.74,
+      "footprint": [0.13, 0.19],
       "label": "bottom-right",
       "referenceObjectName": null,
-      "usagePhase": null
+      "usagePhase": "closing"
     }
   ],
   "ambiguousAliases": [],

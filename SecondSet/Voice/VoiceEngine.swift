@@ -62,11 +62,19 @@ final class VoiceEngine: VoiceProvider {
         let micOK = await AVAudioApplication.requestRecordPermission()
         guard micOK else { throw VoiceError.permissionDenied }
 
-        // `.measurement` asks the platform to skip AGC and noise suppression.
-        // Whether it honours that is exactly what the hour-zero mic test
-        // measures. SPEC §2.2.
+        // `.playAndRecord`, NOT `.record` — `.record` silences all playback
+        // for the app, which is why the locator ping and registration chime
+        // were inaudible on device while voice recognition itself worked
+        // fine. Nothing was wrong with the audio code; the session category
+        // was muting it. Anything that plays a sound here depends on this
+        // staying `.playAndRecord`.
+        //
+        // `.measurement` mode still asks the platform to skip AGC and noise
+        // suppression for recognition accuracy (SPEC §2.2), and is kept —
+        // but note it also lowers output playback level, which is why the
+        // audio entities run at 0 dB rather than trimmed down.
         let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try audioSession.setCategory(.playAndRecord, mode: .measurement, options: .duckOthers)
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
         if ambientMode { try beginRecognition() }
