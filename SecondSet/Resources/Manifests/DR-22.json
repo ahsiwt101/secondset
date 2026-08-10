@@ -4,59 +4,59 @@
   "procedure": "demo",
   "markerImageName": "marker_dr_22",
 
-  "_note": "Marker is the Dilmah strawberry tea packet, centred on the tray. Replaced the adaptor as marker after it failed to auto-detect across several on-device attempts — nearly uniform white plastic gave ARKit almost nothing to key on. The tea packet is dense printed colour with asymmetric layout, which is what image tracking actually wants. The adaptor is now an ordinary findable slot instead. Geometry from IMG_8771: tea packet's measured 6.5cm short edge as the scale reference, everything else read off pixel ratios.",
+  "_note": "Marker is the Hello Panda packet, centred on the tray, LANDSCAPE orientation. Third marker attempt for this tray: the adaptor was near-uniform white (nothing for ARKit to match) and the tea packet was only 6.5cm (too small to detect at standing distance). This one is 14.3cm declared — larger than DR-11's Panadol box, which detects reliably — with dense high-contrast asymmetric print.\n\nGeometry from IMG_8777, scaled off the packet's directly measured 13.2 x 8.8 cm. Worth recording why that matters: scaling instead off the previously-derived tray size gave 14.4 x 9.6 cm for the packet, i.e. every distance 8.9% too large, because that chain traced back to the tea packet's 6.5cm. The error was a clean uniform scale (both axes off by the same 1.089) rather than a misread outline, which is what identified it as a scale problem and not a geometry one. Measure the marker directly; don't derive it.\n\nThe crop is axis-aligned to the TRAY, not to the packet — the packet sits about 6 degrees off square, and cropping to the tray's axes means the marker's own frame already matches the tray's, so trayYawInMarkerSpaceDegrees stays 0 with no trigonometric compensation to get the sign wrong on. The white tray visible at the crop's corners is intentional and is genuinely part of what the camera sees.",
 
   "geometry": {
     "_units": "metres",
-    "interiorSize": [0.266, 0.02, 0.370],
-    "trayOriginInMarkerSpace": [-0.124, 0.0, -0.198],
+    "interiorSize": [0.340, 0.02, 0.243],
+    "trayOriginInMarkerSpace": [-0.184, 0.0, -0.115],
     "trayYawInMarkerSpaceDegrees": 0.0,
     "slotHeight": 0.010
   },
   "slots": [
     {
       "index": 0,
-      "instrumentID": "adaptor",
-      "displayName": "Power Adaptor",
-      "aliases": ["adaptor", "adapter", "plug", "charger", "power adaptor"],
-      "u": 0.24, "v": 0.19,
-      "footprint": [0.09, 0.12],
+      "instrumentID": "kinder_joy",
+      "displayName": "Kinder Joy",
+      "aliases": ["kinder joy", "kinder egg", "chocolate egg", "kinder"],
+      "u": 0.22, "v": 0.20,
+      "footprint": [0.09, 0.09],
       "label": "top-left",
       "referenceObjectName": null,
       "usagePhase": null
     },
     {
       "index": 1,
-      "instrumentID": "tooth_mousse",
-      "displayName": "Tooth Mousse",
-      "aliases": ["tooth mousse", "mousse", "gc mousse", "toothpaste"],
-      "u": 0.80, "v": 0.22,
-      "footprint": [0.08, 0.15],
+      "instrumentID": "adaptor",
+      "displayName": "Power Adaptor",
+      "aliases": ["adaptor", "adapter", "plug", "charger", "power adaptor"],
+      "u": 0.89, "v": 0.10,
+      "footprint": [0.12, 0.09],
       "label": "top-right",
       "referenceObjectName": null,
       "usagePhase": null
     },
     {
       "index": 2,
-      "instrumentID": "kinder_joy",
-      "displayName": "Kinder Joy",
-      "aliases": ["kinder joy", "kinder egg", "chocolate egg", "kinder"],
-      "u": 0.19, "v": 0.80,
-      "footprint": [0.10, 0.09],
-      "label": "bottom-left",
-      "referenceObjectName": null,
-      "usagePhase": null
-    },
-    {
-      "index": 3,
       "instrumentID": "needle_holder",
       "displayName": "Needle Holder",
       "aliases": ["needle holder", "needle driver", "driver", "forceps"],
-      "u": 0.77, "v": 0.74,
-      "footprint": [0.13, 0.19],
-      "label": "bottom-right",
+      "u": 0.29, "v": 0.76,
+      "footprint": [0.19, 0.14],
+      "label": "bottom-left",
       "referenceObjectName": null,
       "usagePhase": "closing"
+    },
+    {
+      "index": 3,
+      "instrumentID": "tooth_mousse",
+      "displayName": "Tooth Mousse",
+      "aliases": ["tooth mousse", "mousse", "gc mousse", "toothpaste"],
+      "u": 0.85, "v": 0.88,
+      "footprint": [0.13, 0.08],
+      "label": "bottom-right",
+      "referenceObjectName": null,
+      "usagePhase": null
     }
   ],
   "ambiguousAliases": [],
