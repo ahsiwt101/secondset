@@ -63,12 +63,25 @@ enum Palette {
         return m
     }
 
+    /// The tray-registration flash — a border, not a filled shape, so it
+    /// frames the tray without hiding what's on it.
+    static func frame(_ tint: UIColor, intensity: Float) -> UnlitMaterial {
+        var m = UnlitMaterial(color: tint)
+        if let tex = GradientTextures.frame {
+            m.color = .init(tint: tint, texture: .init(tex))
+        }
+        m.blending = .transparent(opacity: .init(floatLiteral: intensity))
+        m.faceCulling = .none
+        return m
+    }
+
     // MARK: - Prebuilt instances (created once)
 
     static let goldBeam   = beam(gold, intensity: 0.85)
     static let goldSheath = beam(gold, intensity: 0.22)
     static let goldPool   = pool(gold, intensity: 0.75)
     static let goldRing   = ring(gold, intensity: 0.80)
+    static let goldFrame  = frame(gold, intensity: 0.9)
 
     static let cyanBeam   = beam(cyan, intensity: 0.55)
     static let cyanSheath = beam(cyan, intensity: 0.15)

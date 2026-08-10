@@ -172,7 +172,9 @@ final class CaseSession {
         // same path). A confirmation the wearer can register without needing
         // to be looking at the 2D setup list, deliberately not another halo.
         if !wasBound {
-            renderer?.announceRegistration(at: pose.originFromTray)
+            let interior = tray.manifest.geometry.interior
+            renderer?.announceRegistration(at: pose.originFromTray,
+                                           footprint: SIMD2(interior.x, interior.z))
         }
         Task { await rebuildResolver() }
     }

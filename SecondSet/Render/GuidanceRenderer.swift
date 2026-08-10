@@ -34,6 +34,14 @@ final class GuidanceRenderer {
     private let registrationAnnounce = Entity()
     private var registrationChime: AudioResource?
 
+    /// The visual half of that confirmation: a glowing border sized to the
+    /// tray itself, not the object-shaped halo — audio alone turned out to
+    /// be missable, and this is legible without watching the 2D setup list,
+    /// which was the actual point.
+    private let registrationFlash = ModelEntity(
+        mesh: .generatePlane(width: 0.2, depth: 0.2),
+        materials: [Palette.goldFrame])
+
     init(root: Entity) {
         self.root = root
 
@@ -46,6 +54,9 @@ final class GuidanceRenderer {
 
         registrationAnnounce.spatialAudio = SpatialAudioComponent(gain: -4, distanceAttenuation: .default)
         root.addChild(registrationAnnounce)
+
+        registrationFlash.isEnabled = false
+        root.addChild(registrationFlash)
     }
 
     // MARK: - Preallocation
@@ -100,11 +111,39 @@ final class GuidanceRenderer {
 
     /// Called once, exactly when a tray moves from unbound to bound —
     /// `CaseSession.apply(_:TrayPose)` guards the transition so this never
-    /// repeats on the pose corrections that follow.
-    func announceRegistration(at transform: simd_float4x4) {
-        guard let registrationChime else { return }
-        registrationAnnounce.transform = Transform(matrix: transform)
-        registrationAnnounce.playAudio(registrationChime)
+    /// repeats on the pose corrections that follow. `footprint` is the
+    /// tray's own interior size (x, z) so the border actually frames it
+    /// rather than being some arbitrary fixed size.
+    func announceRegistration(at transform: simd_float4x4, footprint: SIMD2<Float>) {
+        if let registrationChime {
+            registrationAnnounce.transform = Transform(matrix: transform)
+            registrationAnnounce.playAudio(registrationChime)
+        }
+
+        let margin: Float = 1.1   // sits just outside the tray's own rim
+        registrationFlash.model?.mesh = .generatePlane(width: footprint.x * margin,
+                                                        depth: footprint.y * margin)
+        registrationFlash.transform = Transform(matrix: transform)
+        registrationFlash.position.y += 0.003
+        registrationFlash.isEnabled = true
+
+        // Same base-transform pattern Beacon's pulse uses — animating from
+        // .identity would snap the flash back to the world origin every
+        // cycle instead of pulsing in place.
+        let base = registrationFlash.transform
+        var grown = base
+        grown.scale *= SIMD3<Float>(1.08, 1, 1.08)
+        let animation = FromToByAnimation<Transform>(
+            from: base, to: grown, duration: 0.5,
+            timing: .easeInOut, repeatMode: .autoReverse)
+        if let resource = try? AnimationResource.generate(with: animation) {
+            registrationFlash.playAnimation(resource)
+        }
+
+        Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(1500))
+            self?.registrationFlash.isEnabled = false
+        }
     }
 
     // MARK: - Tray placement

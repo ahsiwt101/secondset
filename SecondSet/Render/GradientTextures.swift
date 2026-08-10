@@ -57,6 +57,30 @@ enum GradientTextures {
         }
     }
 
+    /// Glowing rounded-rect border, transparent centre. Stretched onto
+    /// whatever aspect ratio a tray's footprint plane has, so the border
+    /// reads slightly thicker on the long edge of an elongated tray — an
+    /// acceptable trade for a texture that doesn't need regenerating per
+    /// tray shape, and the effect is on-screen for under two seconds.
+    static let frame: TextureResource? = make(width: 256, height: 256) { ctx, w, h in
+        let inset: CGFloat = 16
+        let rect = CGRect(x: inset, y: inset,
+                          width: CGFloat(w) - inset * 2, height: CGFloat(h) - inset * 2)
+        let path = CGPath(roundedRect: rect, cornerWidth: 22, cornerHeight: 22, transform: nil)
+
+        for i in stride(from: 10, through: 2, by: -2) {
+            let t = CGFloat(i) / 10
+            ctx.setStrokeColor(red: 1, green: 1, blue: 1, alpha: (1 - t) * 0.35 + 0.05)
+            ctx.setLineWidth(CGFloat(i) * 2.2)
+            ctx.addPath(path)
+            ctx.strokePath()
+        }
+        ctx.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1.0)
+        ctx.setLineWidth(3)
+        ctx.addPath(path)
+        ctx.strokePath()
+    }
+
     /// Soft round sprite for individual particles. A default square particle is
     /// the single most obvious tell that an effect was not art-directed.
     static let mote: TextureResource? = make(width: 64, height: 64) { ctx, w, h in
